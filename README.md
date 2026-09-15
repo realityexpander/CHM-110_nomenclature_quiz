@@ -4,6 +4,9 @@ An interactive browser-based quiz for practicing introductory chemical nomenclat
 
 The quiz is based primarily on **OpenStax Chemistry 2e, Chapter 2**, especially Sections **2.6: Ionic and Molecular Compounds** and **2.7: Chemical Nomenclature**.
 
+<img width="688" height="705" alt="image" src="https://github.com/user-attachments/assets/ee64ab30-bdef-4e25-b96e-c34dc555fa50" />
+Live App: https://realityexpander.github.io/CHM-110_nomenclature_quiz/
+
 ## Features
 
 - **100-question question bank**
