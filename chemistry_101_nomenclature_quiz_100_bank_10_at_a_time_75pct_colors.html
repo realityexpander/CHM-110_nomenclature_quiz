@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chemistry 101 Nomenclature Quiz — 100 Questions</title>
+<style>
+  :root{
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#172033;
+    --muted:#5c667a;
+    --border:#d9deea;
+    --accent:#3157c8;
+    --accent2:#eaf0ff;
+    --good:#00FF00;
+    --goodbg:#60EF60;
+    --bad:#FF0000;
+    --badbg:#EF6060;
+    --shadow:0 14px 35px rgba(24,39,75,.10);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:linear-gradient(180deg,#eef3ff 0,#f7f8fb 180px,#f7f8fb 100%);
+    color:var(--text);
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:28px 18px 48px}
+  header{margin-bottom:18px}
+  h1{font-size:clamp(1.65rem,3vw,2.35rem);margin:0 0 8px}
+  .subtitle{color:var(--muted);line-height:1.5;margin:0}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:24px;
+  }
+  .toprow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .badge{
+    display:inline-block;
+    background:var(--accent2);
+    color:#24459f;
+    padding:6px 10px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:.82rem;
+  }
+  .score{font-weight:800}
+  .progress{
+    height:10px;
+    background:#e8ebf2;
+    border-radius:999px;
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .bar{
+    height:100%;
+    width:0%;
+    background:var(--accent);
+    transition:width .25s ease;
+  }
+  .qnum{color:var(--muted);font-weight:700;font-size:.92rem;margin-bottom:8px}
+  .question{font-size:1.28rem;line-height:1.45;font-weight:800;margin-bottom:18px}
+  .formula{
+    font-family:"Times New Roman",serif;
+    font-size:1.18em;
+    letter-spacing:.01em;
+    white-space:nowrap;
+  }
+  .options{display:grid;gap:11px}
+  .opt{
+    width:100%;
+    text-align:left;
+    border:1px solid var(--border);
+    background:#fff;
+    padding:13px 14px;
+    border-radius:12px;
+    font-size:1rem;
+    line-height:1.35;
+    cursor:pointer;
+    transition:.12s ease;
+  }
+  .opt:hover:not(:disabled){border-color:#9bb0ef;background:#f8faff}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:#00BF00;background:var(--goodbg);color:#006F00;font-weight:750}
+  .opt.wrong{border-color:#BF0000;background:var(--badbg);color:#8F0000;font-weight:750}
+  .feedback{
+    margin-top:18px;
+    padding:14px 15px;
+    border-radius:12px;
+    display:none;
+    line-height:1.45;
+  }
+  .feedback.good{display:block;background:var(--goodbg);border:2px solid #00BF00;color:#006F00}
+  .feedback.bad{display:block;background:var(--badbg);border:2px solid #BF0000;color:#8F0000}
+  .why{display:block;margin-top:5px;color:inherit;font-weight:500}
+  .controls{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:18px;
+  }
+  button.primary{
+    border:0;
+    background:var(--accent);
+    color:#fff;
+    padding:11px 18px;
+    border-radius:11px;
+    font-weight:800;
+    font-size:1rem;
+    cursor:pointer;
+  }
+  button.primary:disabled{opacity:.45;cursor:not-allowed}
+  .results h2{margin-top:0}
+  .bigscore{font-size:2rem;font-weight:900;margin:8px 0}
+  .result-note{color:var(--muted);margin-bottom:18px}
+  .review{display:grid;gap:12px;margin-top:18px}
+  .review-item{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:13px 14px;
+    background:#fafbfe;
+  }
+  .review-item strong{display:block;margin-bottom:5px}
+  .missed{color:var(--bad)}
+  .correctline{color:var(--good);font-weight:700}
+  .footer{
+    color:var(--muted);
+    font-size:.86rem;
+    margin-top:18px;
+    line-height:1.5;
+  }
+  .footer a{color:var(--accent)}
+  .hidden{display:none!important}
+  @media (max-width:560px){
+    .card{padding:18px}
+    .toprow{align-items:flex-start}
+    .question{font-size:1.15rem}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Chemistry 101: Chemical Nomenclature</h1>
+    <p class="subtitle">10-question quiz session drawn randomly from a 100-question bank based primarily on OpenStax Chemistry 2e, Chapter 2. Covers formulas ↔ names, metal/nonmetal classification, ionic vs. molecular compounds, Roman numerals, molecular prefixes, polyatomic ions, and major periodic-table families.</p>
+  </header>
+
+  <section id="quiz" class="card">
+    <div class="toprow">
+      <span id="category" class="badge">Category</span>
+      <span id="score" class="score">Score: 0 / 0</span>
+    </div>
+    <div class="progress"><div id="bar" class="bar"></div></div>
+
+    <div id="qnum" class="qnum"></div>
+    <div id="question" class="question"></div>
+    <div id="options" class="options"></div>
+    <div id="feedback" class="feedback"></div>
+
+    <div class="controls">
+      <button id="nextBtn" class="primary" disabled>Next Question</button>
+    </div>
+  </section>
+
+  <section id="results" class="card results hidden">
+    <h2>Quiz Complete</h2>
+    <div id="bigscore" class="bigscore"></div>
+    <div id="resultNote" class="result-note"></div>
+    <div class="result-note">Each quiz uses 10 randomly selected questions from the full 100-question bank.</div>
+    <button id="restartBtn" class="primary">New 10-Question Quiz</button>
+    <div id="review" class="review"></div>
+  </section>
+
+  <div class="footer">
+    Reference: OpenStax <em>Chemistry 2e</em>, Sections 2.6–2.7.
+    <a href="https://openstax.org/books/chemistry-2e/pages/2-6-ionic-and-molecular-compounds" target="_blank" rel="noopener">2.6 Ionic and Molecular Compounds</a> ·
+    <a href="https://openstax.org/books/chemistry-2e/pages/2-7-chemical-nomenclature" target="_blank" rel="noopener">2.7 Chemical Nomenclature</a>.
+    Iodate (IO<sub>3</sub><sup>−</sup>) is included because it was specifically requested.
+  </div>
+</div>
+
+<script>
+const F = s => `<span class="formula">${s}</span>`;
+
+const questions = [
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>sodium chloride</b>?",
+    choices:[F("NaCl"),F("NaCl<sub>2</sub>"),F("Na<sub>2</sub>Cl"),F("Na<sub>2</sub>Cl<sub>2</sub>")],
+    answer:0,
+    why:"Sodium forms Na<sup>+</sup> and chloride forms Cl<sup>−</sup>, so the charges balance in a 1:1 ratio."
+  },
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>magnesium nitride</b>?",
+    choices:[F("MgN"),F("Mg<sub>2</sub>N<sub>3</sub>"),F("Mg<sub>3</sub>N<sub>2</sub>"),F("MgN<sub>2</sub>")],
+    answer:2,
+    why:"Mg is Mg<sup>2+</sup> and nitride is N<sup>3−</sup>. The smallest neutral ratio is 3 Mg ions to 2 nitride ions."
+  },
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>aluminum oxide</b>?",
+    choices:[F("AlO"),F("Al<sub>2</sub>O<sub>3</sub>"),F("Al<sub>3</sub>O<sub>2</sub>"),F("AlO<sub>2</sub>")],
+    answer:1,
+    why:"Aluminum is Al<sup>3+</sup> and oxide is O<sup>2−</sup>, giving Al<sub>2</sub>O<sub>3</sub>."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>calcium phosphate</b>?",
+    choices:[F("CaPO<sub>4</sub>"),F("Ca<sub>2</sub>(PO<sub>4</sub>)<sub>3</sub>"),F("Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub>"),F("Ca(PO<sub>4</sub>)<sub>2</sub>")],
+    answer:2,
+    why:"Ca<sup>2+</sup> and phosphate PO<sub>4</sub><sup>3−</sup> balance as 3 calcium ions and 2 phosphate ions."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>ammonium sulfate</b>?",
+    choices:[F("NH<sub>4</sub>SO<sub>4</sub>"),F("(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>"),F("NH<sub>4</sub>(SO<sub>4</sub>)<sub>2</sub>"),F("(NH<sub>4</sub>)<sub>2</sub>(SO<sub>4</sub>)<sub>2</sub>")],
+    answer:1,
+    why:"Ammonium is NH<sub>4</sub><sup>+</sup> and sulfate is SO<sub>4</sub><sup>2−</sup>, so two ammonium ions are needed."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>potassium iodate</b>?",
+    choices:[F("KIO"),F("KIO<sub>2</sub>"),F("KIO<sub>3</sub>"),F("K<sub>2</sub>IO<sub>3</sub>")],
+    answer:2,
+    why:"Potassium is K<sup>+</sup> and iodate is IO<sub>3</sub><sup>−</sup>; they combine 1:1."
+  },
+  {
+    category:"Formula → Name",
+    q:`What is the correct name for ${F("FeCl<sub>3</sub>")}?`,
+    choices:["iron chloride","iron(I) chloride","iron(II) chloride","iron(III) chloride"],
+    answer:3,
+    why:"Three Cl<sup>−</sup> ions give −3 total charge, so iron must be Fe<sup>3+</sup>: iron(III) chloride."
+  },
+  {
+    category:"Formula → Name",
+    q:`What is the correct name for ${F("Cu<sub>2</sub>O")}?`,
+    choices:["copper oxide","copper(I) oxide","copper(II) oxide","dicopper monoxide"],
+    answer:1,
+    why:"Oxygen is O<sup>2−</sup>. Two Cu atoms must contribute +2 total, so each copper is Cu<sup>+</sup>."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct systematic name for ${F("N<sub>2</sub>O<sub>4</sub>")}?`,
+    choices:["nitrogen oxide","nitrogen tetroxide","dinitrogen tetroxide","dinitrogen oxide"],
+    answer:2,
+    why:"Two nitrogen atoms use di-, and four oxygen atoms use tetra- + oxide → tetroxide."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct name for ${F("PCl<sub>5</sub>")}?`,
+    choices:["phosphorus chloride","phosphorus pentachloride","monophosphorus pentachloride","phosphorus(V) chloride"],
+    answer:1,
+    why:"This is a binary molecular compound. Five chlorine atoms use the prefix penta-."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:`What is the correct name for ${F("NH<sub>4</sub>NO<sub>3</sub>")}?`,
+    choices:["ammonium nitrate","ammonium nitrite","nitrogen hydrogen oxide","ammonium nitrogen oxide"],
+    answer:0,
+    why:"NH<sub>4</sub><sup>+</sup> is ammonium and NO<sub>3</sub><sup>−</sup> is nitrate."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:`What is the correct name for ${F("Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>")}?`,
+    choices:["aluminum sulfide","aluminum sulfite","aluminum sulfate","dialuminum trisulfate"],
+    answer:2,
+    why:"SO<sub>4</sub><sup>2−</sup> is sulfate. Ionic compounds do not use Greek prefixes to state ion counts."
+  },
+  {
+    category:"Metal / Nonmetal",
+    q:`Classify the elements in ${F("CaCl<sub>2</sub>")}.`,
+    choices:["metal + metal","metal + nonmetal","nonmetal + nonmetal","metalloid + nonmetal"],
+    answer:1,
+    why:"Calcium is a metal and chlorine is a nonmetal."
+  },
+  {
+    category:"Metal / Nonmetal",
+    q:`Classify the elements in ${F("CO<sub>2</sub>")}.`,
+    choices:["metal + nonmetal","metal + metal","nonmetal + nonmetal","metal + metalloid"],
+    answer:2,
+    why:"Carbon and oxygen are both nonmetals."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which of the following is an <b>alkaline-earth metal</b> (Group 2)?",
+    choices:["sodium","calcium","chlorine","neon"],
+    answer:1,
+    why:"Calcium is a Group 2 alkaline-earth metal."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which of the following is a <b>halogen</b> (Group 17)?",
+    choices:["argon","bromine","magnesium","potassium"],
+    answer:1,
+    why:"Bromine is a Group 17 halogen."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which of the following is an <b>alkali metal</b> (Group 1, excluding hydrogen)?",
+    choices:["sodium","calcium","fluorine","neon"],
+    answer:0,
+    why:"Sodium is a Group 1 alkali metal."
+  },
+  {
+    category:"Ionic vs. Molecular",
+    q:`Is ${F("N<sub>2</sub>O<sub>5</sub>")} best classified as ionic or molecular?`,
+    choices:["ionic","molecular","metallic","polyatomic ionic only"],
+    answer:1,
+    why:"Nitrogen and oxygen are both nonmetals, so the compound is molecular (covalent)."
+  },
+  {
+    category:"Ionic vs. Molecular",
+    q:`Is ${F("K<sub>3</sub>PO<sub>4</sub>")} ionic or molecular?`,
+    choices:["molecular","ionic","metallic","cannot be classified"],
+    answer:1,
+    why:"K<sup>+</sup> ions combine with the polyatomic phosphate ion PO<sub>4</sub><sup>3−</sup>, so this is ionic."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which of the following is a <b>noble gas</b> (Group 18)?",
+    choices:["chlorine","sodium","neon","calcium"],
+    answer:2,
+    why:"Neon is a Group 18 noble gas."
+  },
+  {
+    category:"Silver Compounds",
+    q:`Choose the correct name for ${F("AgNO<sub>3</sub>")}.`,
+    choices:["silver nitrite","silver nitrate","silver(I) nitride","silver nitrogen oxide"],
+    answer:1,
+    why:"Ag forms Ag<sup>+</sup> in introductory nomenclature, and NO<sub>3</sub><sup>−</sup> is nitrate, so the compound is silver nitrate."
+  },
+  {
+    category:"Multiple Choice: Name",
+    q:`Choose the correct name for ${F("Fe<sub>2</sub>O<sub>3</sub>")}.`,
+    choices:["iron oxide","iron(II) oxide","iron(III) oxide","diiron trioxide"],
+    answer:2,
+    why:"Three O<sup>2−</sup> ions total −6; two Fe atoms must total +6, so each Fe is +3."
+  },
+  {
+    category:"Multiple Choice: Name",
+    q:`Choose the correct systematic name for ${F("CO")}.`,
+    choices:["carbon oxide","carbon monoxide","monocarbon oxide","carbon dioxide"],
+    answer:1,
+    why:"The first element normally omits mono-. One oxygen atom is monoxide."
+  },
+  {
+    category:"Multiple Choice: Formula",
+    q:"Which formula is <b>ammonium iodate</b>?",
+    choices:[F("NH<sub>4</sub>IO"),F("NH<sub>4</sub>IO<sub>2</sub>"),F("NH<sub>4</sub>IO<sub>3</sub>"),F("(NH<sub>4</sub>)<sub>2</sub>IO<sub>3</sub>")],
+    answer:2,
+    why:"NH<sub>4</sub><sup>+</sup> and IO<sub>3</sub><sup>−</sup> have equal and opposite charges, so the ratio is 1:1."
+  },
+  {
+    category:"Multiple Choice: Formula",
+    q:"Which formula is <b>sodium phosphate</b>?",
+    choices:[F("NaPO<sub>4</sub>"),F("Na<sub>2</sub>PO<sub>4</sub>"),F("Na<sub>3</sub>PO<sub>4</sub>"),F("Na(PO<sub>4</sub>)<sub>3</sub>")],
+    answer:2,
+    why:"Na<sup>+</sup> and PO<sub>4</sub><sup>3−</sup> require three sodium ions for each phosphate ion."
+  },
+  {
+    category:"Multiple Choice: Formula",
+    q:"Which formula is <b>calcium nitrate</b>?",
+    choices:[F("CaNO<sub>3</sub>"),F("Ca(NO<sub>3</sub>)<sub>2</sub>"),F("Ca<sub>2</sub>NO<sub>3</sub>"),F("Ca<sub>3</sub>N<sub>2</sub>")],
+    answer:1,
+    why:"Ca<sup>2+</sup> needs two nitrate ions, NO<sub>3</sub><sup>−</sup>, so parentheses are required."
+  },
+  {
+    category:"Multiple Choice: Formula",
+    q:"Which formula is <b>sulfur trioxide</b>?",
+    choices:[F("SO"),F("SO<sub>2</sub>"),F("SO<sub>3</sub>"),F("S<sub>3</sub>O")],
+    answer:2,
+    why:"No prefix on sulfur means one sulfur atom; tri- indicates three oxygen atoms."
+  },
+  {
+    category:"Multiple Choice: Formula",
+    q:"Which formula is <b>dinitrogen monoxide</b>?",
+    choices:[F("NO"),F("NO<sub>2</sub>"),F("N<sub>2</sub>O"),F("N<sub>2</sub>O<sub>2</sub>")],
+    answer:2,
+    why:"Di- means two nitrogen atoms; mono- means one oxygen atom."
+  },
+  {
+    category:"Roman Numerals + Polyatomic",
+    q:"Which formula is <b>iron(II) phosphate</b>?",
+    choices:[F("FePO<sub>4</sub>"),F("Fe<sub>2</sub>PO<sub>4</sub>"),F("Fe<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub>"),F("Fe<sub>2</sub>(PO<sub>4</sub>)<sub>3</sub>")],
+    answer:2,
+    why:"Fe<sup>2+</sup> and PO<sub>4</sub><sup>3−</sup> balance with 3 Fe ions (+6) and 2 phosphate ions (−6)."
+  },
+  {
+    category:"Zinc Compounds",
+    q:"What is the correct formula for <b>zinc chloride</b>?",
+    choices:[F("ZnCl"),F("ZnCl<sub>2</sub>"),F("Zn<sub>2</sub>Cl"),F("Zn<sub>2</sub>Cl<sub>3</sub>")],
+    answer:1,
+    why:"Zinc forms Zn<sup>2+</sup> and chloride is Cl<sup>−</sup>, so two chloride ions are required: ZnCl<sub>2</sub>."
+  },
+
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>potassium bromide</b>?",
+    choices:[F("KBr"),F("KBr<sub>2</sub>"),F("K<sub>2</sub>Br"),F("K<sub>2</sub>Br<sub>2</sub>")],
+    answer:0,
+    why:"K<sup>+</sup> and Br<sup>−</sup> combine in a 1:1 ratio."
+  },
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>calcium fluoride</b>?",
+    choices:[F("CaF"),F("CaF<sub>2</sub>"),F("Ca<sub>2</sub>F"),F("Ca<sub>2</sub>F<sub>3</sub>")],
+    answer:1,
+    why:"Ca<sup>2+</sup> requires two F<sup>−</sup> ions."
+  },
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>lithium oxide</b>?",
+    choices:[F("LiO"),F("Li<sub>2</sub>O"),F("LiO<sub>2</sub>"),F("Li<sub>2</sub>O<sub>2</sub>")],
+    answer:1,
+    why:"Two Li<sup>+</sup> ions are needed to balance one O<sup>2−</sup> ion."
+  },
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>aluminum sulfide</b>?",
+    choices:[F("AlS"),F("Al<sub>2</sub>S<sub>3</sub>"),F("Al<sub>3</sub>S<sub>2</sub>"),F("AlS<sub>2</sub>")],
+    answer:1,
+    why:"Al<sup>3+</sup> and S<sup>2−</sup> balance as Al<sub>2</sub>S<sub>3</sub>."
+  },
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>silver chloride</b>?",
+    choices:[F("AgCl"),F("AgCl<sub>2</sub>"),F("Ag<sub>2</sub>Cl"),F("Ag<sub>2</sub>Cl<sub>3</sub>")],
+    answer:0,
+    why:"Silver is commonly Ag<sup>+</sup>, and chloride is Cl<sup>−</sup>."
+  },
+  {
+    category:"Name → Formula",
+    q:"What is the correct formula for <b>zinc oxide</b>?",
+    choices:[F("ZnO"),F("Zn<sub>2</sub>O"),F("ZnO<sub>2</sub>"),F("Zn<sub>2</sub>O<sub>3</sub>")],
+    answer:0,
+    why:"Zn<sup>2+</sup> and O<sup>2−</sup> combine 1:1."
+  },
+  {
+    category:"Formula → Name",
+    q:`What is the correct name for ${F("Na<sub>2</sub>S")}?`,
+    choices:["sodium sulfur","sodium sulfide","disodium sulfide","sodium sulfate"],
+    answer:1,
+    why:"The anion S<sup>2−</sup> is named sulfide."
+  },
+  {
+    category:"Formula → Name",
+    q:`What is the correct name for ${F("MgCl<sub>2</sub>")}?`,
+    choices:["magnesium chloride","magnesium dichloride","magnesium(II) chloride","magnesium chlorate"],
+    answer:0,
+    why:"Magnesium has a fixed +2 charge, so no Roman numeral is used."
+  },
+  {
+    category:"Formula → Name",
+    q:`What is the correct name for ${F("CaO")}?`,
+    choices:["calcium oxide","calcium monoxide","calcium(II) oxide","calcium oxygen"],
+    answer:0,
+    why:"Calcium has a fixed +2 charge and O<sup>2−</sup> is oxide."
+  },
+  {
+    category:"Formula → Name",
+    q:`What is the correct name for ${F("AlN")}?`,
+    choices:["aluminum nitrogen","aluminum nitride","aluminum nitrate","aluminum(III) nitride"],
+    answer:1,
+    why:"N<sup>3−</sup> as a monatomic anion is nitride."
+  },
+  {
+    category:"Roman Numerals",
+    q:`What is the correct name for ${F("FeO")}?`,
+    choices:["iron oxide","iron(I) oxide","iron(II) oxide","iron(III) oxide"],
+    answer:2,
+    why:"O is −2, so Fe must be +2."
+  },
+  {
+    category:"Roman Numerals",
+    q:`What is the correct name for ${F("CuCl<sub>2</sub>")}?`,
+    choices:["copper chloride","copper(I) chloride","copper(II) chloride","dicopper chloride"],
+    answer:2,
+    why:"Two Cl<sup>−</sup> ions require Cu<sup>2+</sup>."
+  },
+  {
+    category:"Roman Numerals",
+    q:`What is the correct name for ${F("CuCl")}?`,
+    choices:["copper(I) chloride","copper(II) chloride","copper chloride","copper monochloride"],
+    answer:0,
+    why:"One Cl<sup>−</sup> requires Cu<sup>+</sup>."
+  },
+  {
+    category:"Roman Numerals",
+    q:`What is the correct name for ${F("SnO<sub>2</sub>")}?`,
+    choices:["tin oxide","tin(II) oxide","tin(IV) oxide","tin dioxide"],
+    answer:2,
+    why:"Two oxide ions total −4, so Sn must be +4."
+  },
+  {
+    category:"Roman Numerals",
+    q:`What is the correct name for ${F("PbCl<sub>2</sub>")}?`,
+    choices:["lead chloride","lead(I) chloride","lead(II) chloride","lead(IV) chloride"],
+    answer:2,
+    why:"Two chloride ions give −2 total, so Pb is +2."
+  },
+  {
+    category:"Roman Numerals",
+    q:`What is the correct name for ${F("PbO<sub>2</sub>")}?`,
+    choices:["lead(II) oxide","lead(IV) oxide","lead oxide","lead dioxide only"],
+    answer:1,
+    why:"Two oxide ions total −4, so Pb is +4."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>sodium nitrate</b>?",
+    choices:[F("NaNO<sub>2</sub>"),F("NaNO<sub>3</sub>"),F("Na<sub>2</sub>NO<sub>3</sub>"),F("NaN<sub>3</sub>")],
+    answer:1,
+    why:"Nitrate is NO<sub>3</sub><sup>−</sup> and sodium is Na<sup>+</sup>."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>sodium nitrite</b>?",
+    choices:[F("NaNO<sub>2</sub>"),F("NaNO<sub>3</sub>"),F("Na<sub>2</sub>NO<sub>2</sub>"),F("NaN")],
+    answer:0,
+    why:"Nitrite is NO<sub>2</sub><sup>−</sup>."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>potassium sulfate</b>?",
+    choices:[F("KSO<sub>4</sub>"),F("K<sub>2</sub>SO<sub>4</sub>"),F("KSO<sub>3</sub>"),F("K<sub>2</sub>SO<sub>3</sub>")],
+    answer:1,
+    why:"SO<sub>4</sub><sup>2−</sup> requires two K<sup>+</sup> ions."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>calcium carbonate</b>?",
+    choices:[F("CaCO<sub>3</sub>"),F("Ca<sub>2</sub>CO<sub>3</sub>"),F("Ca(CO<sub>3</sub>)<sub>2</sub>"),F("CaCO<sub>2</sub>")],
+    answer:0,
+    why:"Ca<sup>2+</sup> and CO<sub>3</sub><sup>2−</sup> combine 1:1."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>magnesium hydroxide</b>?",
+    choices:[F("MgOH"),F("Mg(OH)<sub>2</sub>"),F("Mg<sub>2</sub>OH"),F("MgO<sub>2</sub>H<sub>2</sub>")],
+    answer:1,
+    why:"Mg<sup>2+</sup> requires two hydroxide ions, OH<sup>−</sup>."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>aluminum hydroxide</b>?",
+    choices:[F("AlOH"),F("Al(OH)<sub>2</sub>"),F("Al(OH)<sub>3</sub>"),F("Al<sub>3</sub>OH")],
+    answer:2,
+    why:"Al<sup>3+</sup> requires three OH<sup>−</sup> ions."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"What is the correct formula for <b>ammonium phosphate</b>?",
+    choices:[F("NH<sub>4</sub>PO<sub>4</sub>"),F("(NH<sub>4</sub>)<sub>2</sub>PO<sub>4</sub>"),F("(NH<sub>4</sub>)<sub>3</sub>PO<sub>4</sub>"),F("NH<sub>4</sub>(PO<sub>4</sub>)<sub>3</sub>")],
+    answer:2,
+    why:"Three NH<sub>4</sub><sup>+</sup> ions are needed for one PO<sub>4</sub><sup>3−</sup> ion."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:`What is the correct name for ${F("CaCO<sub>3</sub>")}?`,
+    choices:["calcium carbonite","calcium carbonate","calcium carbide","calcium carbon oxide"],
+    answer:1,
+    why:"CO<sub>3</sub><sup>2−</sup> is carbonate."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:`What is the correct name for ${F("NaOH")}?`,
+    choices:["sodium oxide","sodium hydrogen oxide","sodium hydroxide","sodium hydride"],
+    answer:2,
+    why:"OH<sup>−</sup> is hydroxide."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:`What is the correct name for ${F("KClO<sub>3</sub>")}?`,
+    choices:["potassium chloride","potassium chlorite","potassium chlorate","potassium perchlorate"],
+    answer:2,
+    why:"ClO<sub>3</sub><sup>−</sup> is chlorate."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:`What is the correct name for ${F("NaClO<sub>4</sub>")}?`,
+    choices:["sodium chlorate","sodium perchlorate","sodium chlorite","sodium hypochlorite"],
+    answer:1,
+    why:"ClO<sub>4</sub><sup>−</sup> is perchlorate."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:`What is the correct name for ${F("KClO<sub>2</sub>")}?`,
+    choices:["potassium chlorite","potassium chlorate","potassium perchlorate","potassium hypochlorite"],
+    answer:0,
+    why:"ClO<sub>2</sub><sup>−</sup> is chlorite."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:`What is the correct name for ${F("NaClO")}?`,
+    choices:["sodium chlorite","sodium hypochlorite","sodium chlorate","sodium chloride"],
+    answer:1,
+    why:"ClO<sup>−</sup> is hypochlorite."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct name for ${F("CO<sub>2</sub>")}?`,
+    choices:["carbon monoxide","carbon dioxide","monocarbon dioxide","carbon oxide"],
+    answer:1,
+    why:"Two oxygen atoms use the prefix di-, giving dioxide."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct name for ${F("SO<sub>2</sub>")}?`,
+    choices:["sulfur oxide","sulfur dioxide","monosulfur dioxide","sulfur(II) oxide"],
+    answer:1,
+    why:"Two oxygen atoms give dioxide."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct name for ${F("SO<sub>3</sub>")}?`,
+    choices:["sulfur trioxide","sulfur dioxide","trisulfur oxide","sulfur(III) oxide"],
+    answer:0,
+    why:"Three oxygen atoms use tri-."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct name for ${F("NO<sub>2</sub>")}?`,
+    choices:["nitrogen monoxide","nitrogen dioxide","mononitrogen dioxide","nitrogen(II) oxide"],
+    answer:1,
+    why:"One nitrogen omits mono-; two oxygens use di-."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct name for ${F("N<sub>2</sub>O<sub>3</sub>")}?`,
+    choices:["dinitrogen trioxide","nitrogen trioxide","dinitrogen dioxide","nitrogen(III) oxide"],
+    answer:0,
+    why:"Two nitrogen atoms use di- and three oxygens use tri-."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct name for ${F("SF<sub>6</sub>")}?`,
+    choices:["sulfur fluoride","sulfur hexafluoride","monosulfur hexafluoride","sulfur(VI) fluoride"],
+    answer:1,
+    why:"Six fluorine atoms use the prefix hexa-."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct formula for <b>phosphorus trichloride</b>?`,
+    choices:[F("PCl"),F("PCl<sub>2</sub>"),F("PCl<sub>3</sub>"),F("P<sub>3</sub>Cl")],
+    answer:2,
+    why:"Tri- indicates three chlorine atoms."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct formula for <b>silicon dioxide</b>?`,
+    choices:[F("SiO"),F("SiO<sub>2</sub>"),F("Si<sub>2</sub>O"),F("Si<sub>2</sub>O<sub>3</sub>")],
+    answer:1,
+    why:"Di- indicates two oxygen atoms."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct formula for <b>dinitrogen pentoxide</b>?`,
+    choices:[F("NO<sub>5</sub>"),F("N<sub>2</sub>O<sub>5</sub>"),F("N<sub>5</sub>O<sub>2</sub>"),F("N<sub>2</sub>O<sub>4</sub>")],
+    answer:1,
+    why:"Di- means 2 nitrogen atoms and penta- means 5 oxygen atoms."
+  },
+  {
+    category:"Molecular Nomenclature",
+    q:`What is the correct formula for <b>carbon tetrachloride</b>?`,
+    choices:[F("CCl"),F("CCl<sub>2</sub>"),F("CCl<sub>4</sub>"),F("C<sub>4</sub>Cl")],
+    answer:2,
+    why:"Tetra- means four chlorine atoms."
+  },
+  {
+    category:"Ionic vs. Molecular",
+    q:`Is ${F("MgBr<sub>2</sub>")} ionic or molecular?`,
+    choices:["ionic","molecular","metallic","cannot be determined"],
+    answer:0,
+    why:"Magnesium is a metal and bromine is a nonmetal."
+  },
+  {
+    category:"Ionic vs. Molecular",
+    q:`Is ${F("CO<sub>2</sub>")} ionic or molecular?`,
+    choices:["ionic","molecular","metallic","polyatomic ionic"],
+    answer:1,
+    why:"Carbon and oxygen are both nonmetals."
+  },
+  {
+    category:"Ionic vs. Molecular",
+    q:`Is ${F("NH<sub>4</sub>Cl")} ionic or molecular?`,
+    choices:["ionic","molecular","metallic","cannot be classified"],
+    answer:0,
+    why:"NH<sub>4</sub><sup>+</sup> and Cl<sup>−</sup> are ions, so the compound is ionic."
+  },
+  {
+    category:"Ionic vs. Molecular",
+    q:`Is ${F("PCl<sub>3</sub>")} ionic or molecular?`,
+    choices:["ionic","molecular","metallic","polyatomic ionic"],
+    answer:1,
+    why:"Phosphorus and chlorine are both nonmetals."
+  },
+  {
+    category:"Ionic vs. Molecular",
+    q:`Is ${F("CaCO<sub>3</sub>")} ionic or molecular?`,
+    choices:["ionic","molecular","metallic","cannot be classified"],
+    answer:0,
+    why:"Ca<sup>2+</sup> and CO<sub>3</sub><sup>2−</sup> form an ionic compound."
+  },
+  {
+    category:"Ionic vs. Molecular",
+    q:`Is ${F("NCl<sub>3</sub>")} ionic or molecular?`,
+    choices:["ionic","molecular","metallic","cannot be classified"],
+    answer:1,
+    why:"Nitrogen and chlorine are both nonmetals."
+  },
+  {
+    category:"Metal / Nonmetal",
+    q:`Classify the elements in ${F("NaBr")}.`,
+    choices:["metal + nonmetal","nonmetal + nonmetal","metal + metal","metalloid + nonmetal"],
+    answer:0,
+    why:"Sodium is a metal and bromine is a nonmetal."
+  },
+  {
+    category:"Metal / Nonmetal",
+    q:`Classify the elements in ${F("PCl<sub>3</sub>")}.`,
+    choices:["metal + nonmetal","nonmetal + nonmetal","metal + metal","metalloid + metal"],
+    answer:1,
+    why:"Phosphorus and chlorine are both nonmetals."
+  },
+  {
+    category:"Metal / Nonmetal",
+    q:`Classify the elements in ${F("ZnS")}.`,
+    choices:["metal + nonmetal","nonmetal + nonmetal","metal + metal","metalloid + nonmetal"],
+    answer:0,
+    why:"Zinc is a metal and sulfur is a nonmetal."
+  },
+  {
+    category:"Metal / Nonmetal",
+    q:`Classify the elements in ${F("NO<sub>2</sub>")}.`,
+    choices:["metal + nonmetal","nonmetal + nonmetal","metal + metal","metalloid + nonmetal"],
+    answer:1,
+    why:"Nitrogen and oxygen are both nonmetals."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which element is an <b>alkali metal</b>?",
+    choices:["lithium","magnesium","fluorine","argon"],
+    answer:0,
+    why:"Lithium is in Group 1."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which element is an <b>alkaline-earth metal</b>?",
+    choices:["potassium","barium","chlorine","xenon"],
+    answer:1,
+    why:"Barium is in Group 2."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which element is a <b>halogen</b>?",
+    choices:["sodium","oxygen","iodine","neon"],
+    answer:2,
+    why:"Iodine is in Group 17."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which element is a <b>noble gas</b>?",
+    choices:["helium","hydrogen","fluorine","calcium"],
+    answer:0,
+    why:"Helium is in Group 18."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which pair contains only <b>halogens</b>?",
+    choices:["F and Cl","Na and K","He and Ne","Mg and Ca"],
+    answer:0,
+    why:"Fluorine and chlorine are both Group 17 halogens."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which pair contains only <b>noble gases</b>?",
+    choices:["Ne and Ar","F and Cl","Na and K","Ca and Mg"],
+    answer:0,
+    why:"Neon and argon are Group 18 noble gases."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which pair contains only <b>alkali metals</b>?",
+    choices:["Li and Na","Mg and Ca","F and Br","Ne and Ar"],
+    answer:0,
+    why:"Lithium and sodium are Group 1 alkali metals."
+  },
+  {
+    category:"Periodic Table Families",
+    q:"Which pair contains only <b>alkaline-earth metals</b>?",
+    choices:["Be and Mg","Li and Na","Cl and Br","Ar and Kr"],
+    answer:0,
+    why:"Beryllium and magnesium are Group 2 alkaline-earth metals."
+  },
+  {
+    category:"Silver Compounds",
+    q:"What is the correct formula for <b>silver nitrate</b>?",
+    choices:[F("AgNO<sub>2</sub>"),F("AgNO<sub>3</sub>"),F("Ag<sub>2</sub>NO<sub>3</sub>"),F("Ag(NO<sub>3</sub>)<sub>2</sub>")],
+    answer:1,
+    why:"Ag<sup>+</sup> and NO<sub>3</sub><sup>−</sup> combine 1:1."
+  },
+  {
+    category:"Silver Compounds",
+    q:"What is the correct formula for <b>silver oxide</b>?",
+    choices:[F("AgO"),F("Ag<sub>2</sub>O"),F("AgO<sub>2</sub>"),F("Ag<sub>2</sub>O<sub>3</sub>")],
+    answer:1,
+    why:"Two Ag<sup>+</sup> ions are needed to balance O<sup>2−</sup>."
+  },
+  {
+    category:"Silver Compounds",
+    q:`What is the correct name for ${F("Ag<sub>2</sub>O")}?`,
+    choices:["silver oxide","silver(II) oxide","disilver monoxide","silver peroxide"],
+    answer:0,
+    why:"Silver is commonly treated as a fixed-charge Ag<sup>+</sup> ion in introductory nomenclature."
+  },
+  {
+    category:"Zinc Compounds",
+    q:"What is the correct formula for <b>zinc nitrate</b>?",
+    choices:[F("ZnNO<sub>3</sub>"),F("Zn(NO<sub>3</sub>)<sub>2</sub>"),F("Zn<sub>2</sub>NO<sub>3</sub>"),F("ZnN<sub>2</sub>O<sub>6</sub>")],
+    answer:1,
+    why:"Zn<sup>2+</sup> needs two nitrate ions."
+  },
+  {
+    category:"Zinc Compounds",
+    q:`What is the correct name for ${F("ZnSO<sub>4</sub>")}?`,
+    choices:["zinc sulfite","zinc sulfate","zinc(II) sulfate","zinc sulfide"],
+    answer:1,
+    why:"Zn has a fixed +2 charge, and SO<sub>4</sub><sup>2−</sup> is sulfate."
+  },
+  {
+    category:"Zinc Compounds",
+    q:`What is the correct name for ${F("ZnS")}?`,
+    choices:["zinc sulfate","zinc sulfide","zinc sulfur","zinc(II) sulfide"],
+    answer:1,
+    why:"S<sup>2−</sup> as a monatomic anion is sulfide."
+  },
+  {
+    category:"Roman Numerals + Polyatomic",
+    q:"What is the correct formula for <b>copper(II) nitrate</b>?",
+    choices:[F("CuNO<sub>3</sub>"),F("Cu(NO<sub>3</sub>)<sub>2</sub>"),F("Cu<sub>2</sub>NO<sub>3</sub>"),F("Cu<sub>2</sub>(NO<sub>3</sub>)<sub>2</sub>")],
+    answer:1,
+    why:"Cu<sup>2+</sup> requires two NO<sub>3</sub><sup>−</sup> ions."
+  },
+  {
+    category:"Roman Numerals + Polyatomic",
+    q:"What is the correct formula for <b>iron(III) sulfate</b>?",
+    choices:[F("FeSO<sub>4</sub>"),F("Fe<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>"),F("Fe<sub>3</sub>SO<sub>4</sub>"),F("Fe(SO<sub>4</sub>)<sub>3</sub>")],
+    answer:1,
+    why:"Two Fe<sup>3+</sup> ions balance three SO<sub>4</sub><sup>2−</sup> ions."
+  },
+  {
+    category:"Roman Numerals + Polyatomic",
+    q:`What is the correct name for ${F("CuSO<sub>4</sub>")}?`,
+    choices:["copper sulfate","copper(I) sulfate","copper(II) sulfate","copper sulfite"],
+    answer:2,
+    why:"SO<sub>4</sub><sup>2−</sup> requires Cu<sup>2+</sup>."
+  },
+  {
+    category:"Roman Numerals + Polyatomic",
+    q:`What is the correct name for ${F("Fe(NO<sub>3</sub>)<sub>3</sub>")}?`,
+    choices:["iron nitrate","iron(II) nitrate","iron(III) nitrate","iron nitrite"],
+    answer:2,
+    why:"Three nitrate ions total −3, so Fe is +3."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"Which ion is <b>phosphate</b>?",
+    choices:[F("PO<sub>3</sub><sup>3−</sup>"),F("PO<sub>4</sub><sup>3−</sup>"),F("P<sub>2</sub>O<sub>7</sub><sup>4−</sup>"),F("PO<sub>4</sub><sup>2−</sup>")],
+    answer:1,
+    why:"Phosphate is PO<sub>4</sub><sup>3−</sup>."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"Which ion is <b>ammonium</b>?",
+    choices:[F("NH<sub>3</sub><sup>+</sup>"),F("NH<sub>4</sub><sup>+</sup>"),F("NH<sub>4</sub><sup>−</sup>"),F("NO<sub>3</sub><sup>−</sup>")],
+    answer:1,
+    why:"Ammonium is NH<sub>4</sub><sup>+</sup>."
+  },
+  {
+    category:"Polyatomic Ions",
+    q:"Which ion is <b>nitrate</b>?",
+    choices:[F("NO<sub>2</sub><sup>−</sup>"),F("NO<sub>3</sub><sup>−</sup>"),F("NO<sub>3</sub><sup>2−</sup>"),F("N<sub>3</sub><sup>−</sup>")],
+    answer:1,
+    why:"Nitrate is NO<sub>3</sub><sup>−</sup>."
+  }
+
+]
+
+const SESSION_SIZE = 10;
+
+let order = [];
+let pos = 0;
+let correct = 0;
+let answered = false;
+let history = [];
+
+const el = id => document.getElementById(id);
+const quiz = el("quiz");
+const results = el("results");
+const qnum = el("qnum");
+const category = el("category");
+const question = el("question");
+const options = el("options");
+const feedback = el("feedback");
+const nextBtn = el("nextBtn");
+const score = el("score");
+const bar = el("bar");
+const review = el("review");
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function start(){
+  order = shuffle([...Array(questions.length).keys()]).slice(0, SESSION_SIZE);
+  pos = 0;
+  correct = 0;
+  answered = false;
+  history = [];
+  quiz.classList.remove("hidden");
+  results.classList.add("hidden");
+  render();
+}
+
+function render(){
+  answered = false;
+  nextBtn.disabled = true;
+  feedback.className = "feedback";
+  feedback.innerHTML = "";
+
+  const qi = order[pos];
+  const item = questions[qi];
+  category.textContent = item.category;
+  qnum.textContent = `Question ${pos+1} of ${order.length}`;
+  question.innerHTML = item.q;
+  score.textContent = `Score: ${correct} / ${pos}`;
+  bar.style.width = `${(pos/order.length)*100}%`;
+
+  const optionOrder = shuffle(item.choices.map((_,i)=>i));
+  options.innerHTML = "";
+  optionOrder.forEach(choiceIndex=>{
+    const b=document.createElement("button");
+    b.className="opt";
+    b.innerHTML=item.choices[choiceIndex];
+    b.dataset.choice=choiceIndex;
+    b.addEventListener("click",()=>select(choiceIndex,b,qi));
+    options.appendChild(b);
+  });
+}
+
+function select(choiceIndex, button, qi){
+  if(answered) return;
+  answered = true;
+  const item = questions[qi];
+  const isCorrect = choiceIndex === item.answer;
+  if(isCorrect) correct++;
+
+  [...options.children].forEach(b=>{
+    b.disabled=true;
+    const idx=Number(b.dataset.choice);
+    if(idx===item.answer) b.classList.add("correct");
+    if(idx===choiceIndex && idx!==item.answer) b.classList.add("wrong");
+  });
+
+  feedback.className = `feedback ${isCorrect ? "good" : "bad"}`;
+  feedback.innerHTML = `${isCorrect ? "<b>Correct.</b>" : "<b>Incorrect.</b>"} <span class="why">${item.why}</span>`;
+  nextBtn.disabled=false;
+  score.textContent = `Score: ${correct} / ${pos+1}`;
+
+  history.push({
+    qi,
+    chosen:choiceIndex,
+    isCorrect
+  });
+}
+
+nextBtn.addEventListener("click",()=>{
+  pos++;
+  if(pos >= order.length){
+    finish();
+  }else{
+    render();
+  }
+});
+
+function finish(){
+  quiz.classList.add("hidden");
+  results.classList.remove("hidden");
+  bar.style.width="100%";
+
+  const pct=Math.round(correct/order.length*100);
+  el("bigscore").textContent=`${correct} / ${order.length} (${pct}%)`;
+
+  let note="";
+  if(pct>=90) note="Excellent command of introductory chemical nomenclature.";
+  else if(pct>=80) note="Strong result. Review the few categories you missed.";
+  else if(pct>=70) note="Good foundation. Review polyatomic ions, charges, and molecular prefixes.";
+  else note="Review the core naming rules, common ion charges, and the ionic-versus-molecular decision process, then retake the quiz.";
+  el("resultNote").textContent=note;
+
+  const missed=history.filter(h=>!h.isCorrect);
+  review.innerHTML="";
+  if(missed.length===0){
+    review.innerHTML=`<div class="review-item"><strong>Perfect score.</strong>No missed questions to review.</div>`;
+    return;
+  }
+
+  const title=document.createElement("h3");
+  title.textContent=`Review Missed Questions (${missed.length})`;
+  review.appendChild(title);
+
+  missed.forEach((h,n)=>{
+    const item=questions[h.qi];
+    const d=document.createElement("div");
+    d.className="review-item";
+    d.innerHTML=`
+      <strong>${n+1}. ${item.q}</strong>
+      <div class="missed">Your answer: ${item.choices[h.chosen]}</div>
+      <div class="correctline">Correct answer: ${item.choices[item.answer]}</div>
+      <div>${item.why}</div>`;
+    review.appendChild(d);
+  });
+}
+
+el("restartBtn").addEventListener("click",start);
+start();
+</script>
+</body>
+</html>
