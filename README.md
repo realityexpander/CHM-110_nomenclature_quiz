@@ -1,15 +1,15 @@
-# Chemistry 101 Nomenclature Quiz
+# CHM-110 Nomenclature Quiz
 
-An interactive browser-based quiz for practicing introductory chemical nomenclature in a college **Chemistry 101** course.
+An interactive browser-based quiz for practicing introductory chemical nomenclature in **CHM-110 / Chemistry 101**.
 
-The quiz is designed around the nomenclature material presented in **OpenStax Chemistry 2e, Chapter 2**, especially Sections **2.6: Ionic and Molecular Compounds** and **2.7: Chemical Nomenclature**.
+The quiz is based primarily on **OpenStax Chemistry 2e, Chapter 2**, especially Sections **2.6: Ionic and Molecular Compounds** and **2.7: Chemical Nomenclature**.
 
 ## Features
 
 - **100-question question bank**
 - Presents **10 randomly selected questions per quiz session**
 - Gives immediate feedback after each answer
-- Shows the running score during the quiz
+- Shows a running score during the quiz
 - Gives a final score after 10 questions
 - Reviews only the questions missed
 - **New 10-Question Quiz** button generates another randomized set from the 100-question bank
@@ -51,32 +51,54 @@ The question bank includes practice with:
 
 Questions include commonly encountered ions such as:
 
-- Ammonium — `NH4+`
-- Hydroxide — `OH-`
-- Nitrate — `NO3-`
-- Nitrite — `NO2-`
-- Sulfate — `SO4^2-`
-- Carbonate — `CO3^2-`
-- Phosphate — `PO4^3-`
-- Iodate — `IO3-`
-- Hypochlorite — `ClO-`
-- Chlorite — `ClO2-`
-- Chlorate — `ClO3-`
-- Perchlorate — `ClO4-`
+- Ammonium: $\mathrm{NH_4^+}$
+- Hydroxide: $\mathrm{OH^-}$
+- Nitrate: $\mathrm{NO_3^-}$
+- Nitrite: $\mathrm{NO_2^-}$
+- Sulfate: $\mathrm{SO_4^{2-}}$
+- Carbonate: $\mathrm{CO_3^{2-}}$
+- Phosphate: $\mathrm{PO_4^{3-}}$
+- Iodate: $\mathrm{IO_3^-}$
+- Hypochlorite: $\mathrm{ClO^-}$
+- Chlorite: $\mathrm{ClO_2^-}$
+- Chlorate: $\mathrm{ClO_3^-}$
+- Perchlorate: $\mathrm{ClO_4^-}$
+
+## Example Nomenclature Relationships
+
+Examples of the types of relationships practiced in the quiz include:
+
+- Sodium chloride: $\mathrm{NaCl}$
+- Magnesium nitride: $\mathrm{Mg_3N_2}$
+- Aluminum oxide: $\mathrm{Al_2O_3}$
+- Calcium phosphate: $\mathrm{Ca_3(PO_4)_2}$
+- Ammonium sulfate: $\mathrm{(NH_4)_2SO_4}$
+- Potassium iodate: $\mathrm{KIO_3}$
+- Silver nitrate: $\mathrm{AgNO_3}$
+- Zinc chloride: $\mathrm{ZnCl_2}$
+- Iron(III) chloride: $\mathrm{FeCl_3}$
+- Copper(I) oxide: $\mathrm{Cu_2O}$
+- Dinitrogen tetroxide: $\mathrm{N_2O_4}$
+- Phosphorus pentachloride: $\mathrm{PCl_5}$
 
 ## Accessibility
 
-The quiz uses strongly saturated feedback colors to make correct and incorrect responses easier to distinguish.
+The quiz uses high-saturation feedback colors to make correct and incorrect responses easier to distinguish.
 
-- **Correct answer:** 75% green (`#00BF00`)
-- **Incorrect answer:** 75% red (`#BF0000`)
-- Correct and incorrect choices also use distinct borders and light background shading.
+```css
+--good:#00FF00;
+--goodbg:#60EF60;
+--bad:#FF0000;
+--badbg:#EF6060;
+```
 
-The stronger colors were selected specifically to improve visual differentiation for users who have difficulty distinguishing conventional low-saturation red and green interface colors.
+The correct and incorrect choices also use strong borders and contrasting background shading.
+
+These colors were selected to improve visual distinction for users who have difficulty distinguishing lower-saturation red and green interface colors.
 
 ## How the Quiz Works
 
-1. Open the HTML file in a modern web browser.
+1. Open `index.html` in a modern web browser.
 2. The program randomly selects **10 questions from the 100-question bank**.
 3. Select an answer for each question.
 4. The quiz immediately shows whether the answer is correct or incorrect and provides a short explanation.
@@ -86,23 +108,17 @@ The stronger colors were selected specifically to improve visual differentiation
    - and a review of missed questions.
 6. Select **New 10-Question Quiz** to start another randomly selected set.
 
-Because each session draws from the full 100-question bank, repeated sessions provide varied practice rather than simply repeating the same ten questions.
+Because each session draws from the full 100-question bank, repeated sessions provide varied practice.
 
 ## Running Locally
 
 No installation is required.
 
-Download the quiz HTML file and double-click it, or open it from a browser using:
-
-```text
-File → Open
-```
+Download `index.html` and open it directly in a browser.
 
 The application is self-contained and does not require an internet connection after the file has been downloaded.
 
 ## Hosting on GitHub Pages
-
-The quiz can be hosted as a static webpage.
 
 A simple repository can contain:
 
@@ -112,9 +128,9 @@ A simple repository can contain:
 └── README.md
 ```
 
-Rename the quiz HTML file to `index.html` if you want it to load automatically from the root of a GitHub Pages site.
+Because the quiz file is named `index.html`, GitHub Pages can load it automatically from the repository root.
 
-Then enable GitHub Pages for the repository using the repository's Pages settings.
+Enable GitHub Pages in the repository settings and choose the branch/folder you want GitHub Pages to publish.
 
 ## Source Material
 
@@ -131,8 +147,6 @@ Authors:
 
 Publisher: **OpenStax**
 
-Relevant sections:
-
 ### Section 2.6 — Ionic and Molecular Compounds
 
 This section provides the foundation for:
@@ -142,6 +156,8 @@ This section provides the foundation for:
 - predicting ionic formulas from ion charges,
 - recognizing the relationship between metals, nonmetals, and compound type,
 - and working with common polyatomic ions.
+
+Source:
 
 https://openstax.org/books/chemistry-2e/pages/2-6-ionic-and-molecular-compounds
 
@@ -157,13 +173,13 @@ This section provides the primary naming rules used in the quiz, including:
 - molecular compound nomenclature,
 - and Greek prefixes used to indicate the number of atoms in molecular compounds.
 
-https://openstax.org/books/chemistry-2e/pages/2-7-chemical-nomenclature
+Source:
 
-OpenStax describes chemical nomenclature as a systematic method for naming compounds and explains separate naming procedures for ionic and molecular compounds.
+https://openstax.org/books/chemistry-2e/pages/2-7-chemical-nomenclature
 
 ## Course-Specific Additions
 
-The question bank also contains material requested for the associated Chemistry 101 course, including additional practice with:
+The question bank also contains additional practice requested for this CHM-110 course, including:
 
 - zinc,
 - silver,
@@ -173,7 +189,7 @@ The question bank also contains material requested for the associated Chemistry 
 - halogens,
 - and noble gases.
 
-These additions supplement the primary OpenStax nomenclature material and reflect topics being emphasized in the course.
+These additions supplement the primary OpenStax nomenclature material and reflect topics emphasized in the course.
 
 ## Scope
 
@@ -197,9 +213,29 @@ The application is written as a single self-contained file using:
 - CSS
 - JavaScript
 
-No build process or package manager is necessary.
+No build process or package manager is required.
 
-## License and Source Attribution
+## GitHub LaTeX Compatibility
+
+Chemical formulas in this README use GitHub-supported inline LaTeX math syntax.
+
+Example:
+
+```text
+$\mathrm{Ca_3(PO_4)_2}$
+```
+
+GitHub renders this as:
+
+$\mathrm{Ca_3(PO_4)_2}$
+
+Subscripts use `_`, superscripts use `^`, and multi-character charges are grouped with braces, for example:
+
+```text
+$\mathrm{SO_4^{2-}}$
+```
+
+## License and Attribution
 
 OpenStax textbook material should be used and attributed according to the license terms published by OpenStax for *Chemistry 2e*.
 
@@ -210,9 +246,7 @@ This quiz is an independent study aid and is not an official OpenStax product.
 Recommended repository structure:
 
 ```text
-chemistry-nomenclature-quiz/
+CHM-110-Nomenclature-Quiz/
 ├── index.html
 └── README.md
 ```
-
-The entire quiz application can remain in the single `index.html` file, making it especially convenient for GitHub Pages hosting.
